@@ -22,6 +22,8 @@ builder.Services.AddSingleton<Argon2>();
 builder.Services.AddSingleton<JsonWebToken>();
 builder.Services.AddSingleton<Mail>();
 
+builder.Services.AddScoped<AuthorizationFilter>();
+
 var app = builder.Build();
 
 app.UseCors("ReactOnly");
