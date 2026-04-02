@@ -73,7 +73,7 @@ public class RegisterController : ControllerBase
                                                                         {
                                                                                 Text = 
                                                                                 $"Hi {username}\n\n" +
-                                                                                $"Please activate your account by clicking this link: {Environment.GetEnvironmentVariable("PRODUCT_LINK")}/users/verify?token={token}\n" +
+                                                                                $"Please activate your account by clicking this link: {Environment.GetEnvironmentVariable("PRODUCT_LINK")}/profile/activate_account?token={token}\n" +
                                                                                 "This link is valid for 30 minutes.\n\n" +
                                                                                 "SutesFozes"
                                                                         };

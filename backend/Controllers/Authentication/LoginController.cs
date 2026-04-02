@@ -61,45 +61,44 @@ public class LoginController : ControllerBase
                                                 string username = reader.GetString(reader.GetOrdinal("username"));
                                                 string email = reader.GetString(reader.GetOrdinal("email"));
 
-                                                if(tokenVersion > 0 && isVerify)
-                                                {
-                                                        string userPassword = _argon2.HashPassword(password, salt);
+                                                string userPassword = _argon2.HashPassword(password, salt);
 
-                                                        if(userPassword == encryptedPassword)
+                                                if(userPassword == encryptedPassword)
+                                                {
+                                                        if(tokenVersion > 0 && isVerify)
                                                         {
                                                                 string token = _jsonwebtoken.GenerateToken(id, tokenVersion, 365 * 24 * 60);
-                                                                
+                                                                        
                                                                 return Ok(new {status = 1, token = token});
-
                                                         } else {
-                                                                return Unauthorized(new {error = "Username or Password was invalid."});
+
+                                                                string token = _jsonwebtoken.GenerateToken(id, tokenVersion, 30);
+
+                                                                using(var client = _mail.CreateSMTPClient())
+                                                                {
+                                                                        var message = new MimeMessage();
+
+                                                                        message.From.Add(new MailboxAddress("SutesFozes", Environment.GetEnvironmentVariable("SMTP_USERNAME")));
+                                                                        message.To.Add(new MailboxAddress(username, email));
+                                                                        message.Subject = "Sutesfozes registration";
+                                                                        message.Body = new TextPart("plain")
+                                                                        {
+                                                                                Text = 
+                                                                                $"Hi {username}\n\n" +
+                                                                                $"Please activate your account by clicking this link: {Environment.GetEnvironmentVariable("PRODUCT_LINK")}/profile/activate_account?token={token}\n" +
+                                                                                "This link is valid for 30 minutes.\n\n" +
+                                                                                "SutesFozes"
+                                                                        };
+                                                                                
+                                                                        client.Send(message);
+                                                                        client.Disconnect(true);
+
+                                                                        return Unauthorized(new {error = "Your account hasn't been activated."});
+                                                                }
+
                                                         }
                                                 } else {
-
-                                                        string token = _jsonwebtoken.GenerateToken(id, tokenVersion, 30);
-
-                                                        using(var client = _mail.CreateSMTPClient())
-                                                        {
-                                                                var message = new MimeMessage();
-
-                                                                message.From.Add(new MailboxAddress("SutesFozes", Environment.GetEnvironmentVariable("SMTP_USERNAME")));
-                                                                message.To.Add(new MailboxAddress(username, email));
-                                                                message.Subject = "Sutesfozes registration";
-                                                                message.Body = new TextPart("plain")
-                                                                {
-                                                                        Text = 
-                                                                        $"Hi {username}\n\n" +
-                                                                        $"Please activate your account by clicking this link: {Environment.GetEnvironmentVariable("PRODUCT_LINK")}/users/verify?token={token}\n" +
-                                                                        "This link is valid for 30 minutes.\n\n" +
-                                                                        "SutesFozes"
-                                                                };
-                                                                        
-                                                                client.Send(message);
-                                                                client.Disconnect(true);
-
-                                                                return Unauthorized(new {error = "Your account hasn't been activated."});
-                                                        }
-
+                                                        return Unauthorized(new {error = "Username or Password was invalid."});
                                                 }
 
                                         } else {
