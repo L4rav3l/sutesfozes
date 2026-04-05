@@ -55,9 +55,10 @@ function MyRecipes()
                                 </span>
 
                                 <div className="flex justify-center items-center mt-3">
-                                        <span className="text-gray-700 m-2 text-sm">
+                                        {/* <span className="text-gray-700 m-2 text-sm">
                                                 {recipe.carma} Carma
-                                        </span>
+                                        </span> */}
+                                        
 
                                         {recipe.checked && (
                                         <span className="inline-block bg-green-500 text-white text-sm font-medium px-3 py-1 rounded-full">

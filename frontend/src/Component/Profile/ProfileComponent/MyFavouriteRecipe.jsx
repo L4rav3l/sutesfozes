@@ -68,9 +68,9 @@ function MyFavouriteRecipes()
                                 </button>
 
                                 <div className="flex justify-center items-center mt-3">
-                                        <span className="text-gray-700 m-2 text-sm">
+                                        {/*<span className="text-gray-700 m-2 text-sm">
                                                 {recipe.carma} Carma
-                                        </span>
+                                        </span>*/}
                                         <span>
                                                 {recipe.author}
                                         </span>

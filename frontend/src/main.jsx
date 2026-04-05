@@ -7,6 +7,7 @@ import RegisterComponent from './Component/RegisterComponent';
 import ActivateAccount from './Component/Profile/VerifyComponent';
 import Profile from './Component/Profile/Profile';
 import VerifyEmail from './Component/Profile/VerifyEmailComponent';
+import Recipe from './Component/Recipe';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/profile/activate_account" element={<ActivateAccount />} />
         <Route path="/profile/change_address" element={<VerifyEmail />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/recipe/:id" element={<Recipe />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
