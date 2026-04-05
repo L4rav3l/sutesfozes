@@ -27,6 +27,18 @@ function Recipe()
         var apiUrl = import.meta.env.VITE_API_URL;
         var token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
+        const safeParse = (data) => {
+                if (!data) return [];
+
+                if (typeof data === "object") return data;
+
+                try {
+                        return JSON.parse(data);
+                } catch {
+                        return [];
+                }
+        };
+
         useEffect(() => {
 
                 const handleRecipes = async () => {
@@ -43,24 +55,48 @@ function Recipe()
 
                                 setIngredients(JSON.parse(data.ingredients));
                                 setInstructions(data.instructions);
-
-                                console.log(response.data);
+                                
+                                setImages(safeParse(data.images));
                         }
 
-                        catch
+                        catch(ex)
                         {
-                                setNotFound(false);
-                                alert("cigany");
+
+                                setNotFound(true);
+                                alert("error");
                         }
                 }
 
                 const handleFavourite = async () => {
-                        
+                        try
+                        {
+                                const response = await axios.get(`${apiUrl}/api/profile/favourite?Id=${id}`, {headers: {Authorization: `Bearer ${token}`}});
+
+                                setFavourite(response.data.status);
+                        }
+                        catch
+                        {
+                                setFavourite(false);
+                        }
                 }
 
                 handleRecipes();
+                handleFavourite();
 
-        }, [apiUrl, axios]);
+        }, [apiUrl, id]);
+        
+        const handleToggle = async (status) => {
+                        try
+                        {
+                                const response = await axios.post(`${apiUrl}/api/profile/toggle_favourite`, {Id: id, Status: status}, {headers: {Authorization: `Bearer ${token}`}});
+
+                                setFavourite(status);
+                        }
+                        catch
+                        {
+                                
+                        }
+        }
 
         return (
                 <div className="flex flex-col h-screen items-center m-4">
@@ -73,13 +109,13 @@ function Recipe()
         <div className="flex bg-amber-100 p-2 w-12 rounded-lg justify-center items-center">
                 
                 {!favourite && (
-                        <button>
+                        <button onClick={() => handleToggle(true)}>
                                 <IoIosStar size="20" color="gray"/>
                         </button>
                 )}
 
                 {favourite && (
-                        <button>
+                        <button onClick={() => handleToggle(false)}>
                                 <IoIosStar size="20" color="gold"/>
                         </button>
                 )}
@@ -125,6 +161,25 @@ function Recipe()
                                         ))}
                                 </div>
                         </div>
+
+                                {images.length > 0 && (
+                                <div className="bg-white rounded-xl p-4 shadow-inner">
+                                        <h2 className="font-semibold text-gray-700 mb-2">
+                                        Images
+                                        </h2>
+
+                                        <div className="grid grid-cols-2 gap-2">
+                                        {images.map((img, key) => (
+                                                <img
+                                                key={key}
+                                                src={img}
+                                                alt={`recipe-${key}`}
+                                                className="w-full h-32 object-cover rounded-lg hover:scale-105 transition"
+                                                />
+                                        ))}
+                                        </div>
+                                </div>
+                                )}
 
                                 <div className="bg-white rounded-xl p-4 shadow-inner">
                                 <h2 className="font-semibold text-gray-700 mb-2">

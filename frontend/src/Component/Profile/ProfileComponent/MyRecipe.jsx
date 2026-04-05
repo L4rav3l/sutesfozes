@@ -39,8 +39,6 @@ function MyRecipes()
 
         }, [axios, apiUrl, token]);
 
-        console.log(recipes);
-
         return (
                 <>
                         <span className="m-4 font-semibold text-lg">My recipes</span>

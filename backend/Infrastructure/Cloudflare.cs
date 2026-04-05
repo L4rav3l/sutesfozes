@@ -7,12 +7,14 @@ public class Cloudflare
 {
         private readonly IAmazonS3 _s3;
         private readonly string _bucket;
+        private readonly string _bucket_id;
 
         public Cloudflare(IConfiguration config)
         {
                 var accountId = Environment.GetEnvironmentVariable("R2_ACCOUNTID");
 
                 _bucket = Environment.GetEnvironmentVariable("R2_BUCKET");
+                _bucket_id = Environment.GetEnvironmentVariable("R2_BUCKET_ID");
 
                 _s3 = new AmazonS3Client(
                         Environment.GetEnvironmentVariable("R2_ACCESS"),
@@ -42,6 +44,6 @@ public class Cloudflare
 
                 await _s3.PutObjectAsync(request);
 
-                return $"https://pub-{_bucket}.r2.dev/{key}";
+                return $"https://pub-{_bucket_id}.r2.dev/{key}";
         }
 }

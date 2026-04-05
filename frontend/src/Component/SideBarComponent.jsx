@@ -94,7 +94,7 @@ function SideBar()
                         <button className="bg-green-300 p-2 rounded-lg"><GoSearch /></button>
                 </div>
 
-                {logged ? (<button className="flex flex-row bg-green-300 rounded-lg p-2 justify-center items-center gap-2 text-gray-800">
+                {logged ? (<button className="flex flex-row bg-green-300 rounded-lg p-2 justify-center items-center gap-2 text-gray-800" onClick={() => navigate("/profile")}>
                         {username} <CgProfile />
                 </button>
                 ) : (
