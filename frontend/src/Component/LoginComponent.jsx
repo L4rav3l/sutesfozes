@@ -16,11 +16,7 @@ function LoginComponent()
         const apiUrl = import.meta.env.VITE_API_URL;
         const navigate = useNavigate();
 
-        var token = sessionStorage.getItem("token");
-
-        if (!token) {
-                token = localStorage.getItem("token");
-        }
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
         const handleLogin = async () => {
                 if(!username || !password)
