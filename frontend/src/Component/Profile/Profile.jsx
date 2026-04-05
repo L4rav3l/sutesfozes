@@ -6,6 +6,7 @@ import SideBar from "../SideBarComponent";
 import MyProfile from "./ProfileComponent/MyProfile";
 import MyRecipes from "./ProfileComponent/MyRecipe";
 import MyFavouriteRecipes from "./ProfileComponent/MyFavouriteRecipe";
+import SubmitRecipe from "./ProfileComponent/SubmitRecipe";
 
 
 function Profile()
@@ -84,6 +85,10 @@ function Profile()
 
                                         {page === 3 && (
                                                 <MyFavouriteRecipes />
+                                        )}
+
+                                        {page === 4 && (
+                                                <SubmitRecipe />
                                         )}
 
                                 </div>

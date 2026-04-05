@@ -21,6 +21,7 @@ builder.Services.AddSingleton<Postgresql>();
 builder.Services.AddSingleton<Argon2>();
 builder.Services.AddSingleton<JsonWebToken>();
 builder.Services.AddSingleton<Mail>();
+builder.Services.AddSingleton<Cloudflare>();
 
 builder.Services.AddScoped<AuthorizationFilter>();
 
