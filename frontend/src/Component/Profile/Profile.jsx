@@ -5,6 +5,8 @@ import SideBar from "../SideBarComponent";
 
 import MyProfile from "./ProfileComponent/MyProfile";
 import MyRecipes from "./ProfileComponent/MyRecipe";
+import MyFavouriteRecipes from "./ProfileComponent/MyFavouriteRecipe";
+
 
 function Profile()
 {
@@ -61,9 +63,9 @@ function Profile()
                                         <ul className="flex flex-col gap-2">
                                                 <button onClick={(e) => setPage(1)}>Your profile</button>
                                                 <button onClick={(e) => setPage(2)}>My Recipes</button>
-                                                <li>Favourite Recipes</li>
-                                                <li>Submit Recipe</li>
-                                                <li>Logout</li>
+                                                <button onClick={(e) => setPage(3)}>Favourite Recipes</button>
+                                                <button onClick={(e) => setPage(4)}>Submit Recipe</button>
+                                                <button onClick={(e) => {sessionStorage.clear(); localStorage.clear(); navigate("/login"); }}>Logout</button>
                                         </ul>
                                 </div>
                         </div>
@@ -78,6 +80,10 @@ function Profile()
 
                                         {page === 2 && (
                                                 <MyRecipes />
+                                        )}
+
+                                        {page === 3 && (
+                                                <MyFavouriteRecipes />
                                         )}
 
                                 </div>

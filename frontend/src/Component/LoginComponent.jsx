@@ -37,6 +37,8 @@ function LoginComponent()
                                 } else {
                                         sessionStorage.setItem("token", token);
                                 }
+
+                                navigate("/profile")
                         }       
                         catch(ex)
                         {
