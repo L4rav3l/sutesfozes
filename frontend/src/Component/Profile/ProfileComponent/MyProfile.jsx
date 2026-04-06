@@ -122,7 +122,7 @@ function MyProfile({initialUsername, initialEmail})
                         <div className="flex flex-col items-center p-4 w-full rounded-lg">
                                 <span className="text-lg font-semibold">{username}</span>
                                 <span className="text-xs text-gray-700 mt-1">
-                                        16 recipes • 23 favourite recipes • {/*53 karma */}
+                                        {/* 16 recipes • 23 favourite recipes • 53 karma */}
                                 </span>
                         </div>
                 

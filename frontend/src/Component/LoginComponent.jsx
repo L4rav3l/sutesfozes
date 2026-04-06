@@ -115,8 +115,10 @@ function LoginComponent()
                                                 <button className="rounded-lg p-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold transition" onClick={handleLogin} disabled={status}>
                                                 {status ? "Wait..." : "Sign In"}
                                                 </button>
-
+                                                
+                                                <span className="text-center font-semibold text-gray-700">Don't have an account? <button onClick={() => navigate("/register")}>Register</button>.</span>
                                         </div>
+                                        
                                 </div>
                         </div>
                 </div>

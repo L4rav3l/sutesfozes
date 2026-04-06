@@ -273,6 +273,7 @@ function SubmitRecipe()
                                                 className="flex items-center gap-4 p-3 bg-amber-100 rounded-lg shadow-sm"
                                         >
                                                 <img
+                                                        loading="lazy"
                                                         src={item.url}
                                                         alt={item.file.name}
                                                         className="w-20 h-20 object-cover rounded-md "

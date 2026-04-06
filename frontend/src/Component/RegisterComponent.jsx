@@ -108,6 +108,7 @@ function RegisterComponent()
                                                 {status ? "Wait..." : "Sign Up"}
                                                 </button>
 
+                                                <span className="text-center font-semibold text-gray-700">Do you have an account? <button onClick={() => navigate("/login")}>Login</button>.</span>
                                         </div>
                                 </div>
                         </div>

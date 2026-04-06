@@ -24,6 +24,8 @@ function Recipe()
 
         const [notFound, setNotFound] = useState();
 
+        const [loadingImages, setLoadingImages] = useState(false);
+
         var apiUrl = import.meta.env.VITE_API_URL;
         var token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
@@ -56,14 +58,14 @@ function Recipe()
                                 setIngredients(JSON.parse(data.ingredients));
                                 setInstructions(data.instructions);
                                 
-                                setImages(safeParse(data.images));
+                                const parsedImages = safeParse(data.images);
+                                await loadImagesWithCache(parsedImages);
                         }
 
                         catch(ex)
                         {
 
                                 setNotFound(true);
-                                alert("error");
                         }
                 }
 
@@ -98,13 +100,38 @@ function Recipe()
                         }
         }
 
+                const getCachedImage = async (url) => {
+                        const cached = sessionStorage.getItem(url);
+                        if (cached) return cached;
+
+                        const res = await fetch(url);
+                        const blob = await res.blob();
+
+                        const base64 = await new Promise((resolve) => {
+                                const reader = new FileReader();
+                                reader.onloadend = () => resolve(reader.result);
+                                reader.readAsDataURL(blob);
+                        });
+
+                        sessionStorage.setItem(url, base64);
+                        return base64;
+                };
+
+                const loadImagesWithCache = async (imgs) => {
+                        const results = await Promise.all(
+                                imgs.map((url) => getCachedImage(url))
+                        );
+
+                        setImages(results);
+                };
+
         return (
                 <div className="flex flex-col h-screen items-center m-4">
                 
                         <SideBar />
 
-<div className="flex flex-1 w-full items-center justify-center p-6">
-    <div className="flex flex-col bg-amber-200 w-[32rem] p-6 rounded-2xl shadow-lg gap-4">
+        <div className="flex flex-1 w-full items-center justify-center p-6">
+    {!notFound && (<div className="flex flex-col bg-amber-200 w-[32rem] p-6 rounded-2xl shadow-lg gap-4">
         
         <div className="flex bg-amber-100 p-2 w-12 rounded-lg justify-center items-center">
                 
@@ -171,6 +198,7 @@ function Recipe()
                                         <div className="grid grid-cols-2 gap-2">
                                         {images.map((img, key) => (
                                                 <img
+                                                loading="lazy"
                                                 key={key}
                                                 src={img}
                                                 alt={`recipe-${key}`}
@@ -191,7 +219,13 @@ function Recipe()
                                 </p>
                                 </div>
 
-                        </div>
+                        </div>)}
+
+                        {notFound && (
+                                <div className="bg-amber-300 rounded-lg p-2">
+                                        <span className="font-semibold text-gray-700">Recipe not found.</span>
+                                </div>
+                        )}
                         </div>
                 </div>
         )
