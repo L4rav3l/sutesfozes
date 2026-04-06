@@ -4,6 +4,17 @@ SUTESFOZES is a community-driven recipe sharing platform where anyone can upload
 
 Inspired by communities like Reddit’s cooking subreddits, but built as a standalone modern web application.
 
+# Features
+Registration & Login
+
+Settings (e.g. email change, username change, password change)
+
+My Recipes and Favourite Recipes
+
+Submit a Recipe
+
+Search Recipes
+
 # Tech Stack
 Backend: C# (.NET)
 Frontend: React + Vue
