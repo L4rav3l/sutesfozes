@@ -5,28 +5,21 @@ SUTESFOZES is a community-driven recipe sharing platform where anyone can upload
 Inspired by communities like Reddit’s cooking subreddits, but built as a standalone modern web application.
 
 # Features
-Registration & Login
-
-Settings (e.g. email change, username change, password change)
-
-My Recipes and Favourite Recipes
-
-Submit a Recipe
-
-Search Recipes
+- Registration & Login
+- Settings (e.g. email change, username change, password change)
+- My Recipes and Favourite Recipes
+- Submit a Recipe
+- Search Recipes
 
 # Tech Stack
-Backend: C# (.NET)
-Frontend: React + Vue
-Database: PostgreSQL
-File Storage: Cloudflare R2
+- Backend: C# (.NET)
+- Frontend: React + Vue
+- Database: PostgreSQL
+- File Storage: Cloudflare R2
 
 # Performance & Optimization
-Lazy loading for all images
-Session Storage-based image caching
-
-
-## Project Setup
+- Lazy loading for all images which is built straight into the HTML (no unnecessary loading)
+- Session Storage-based image caching (images are stored inside the session and this provides a 1 second better loading time)
 
 # Frontend Setup
 1. Navigate to the frontend directory
@@ -41,12 +34,10 @@ npm run build
 
 # Backend Setup
 
-Build for Linux:
-```dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true```
-Build for Windows:
-```dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true```
+- Build for Linux: `dotnet publish -c Release -r linux-x64 --self-contained true /p:PublishSingleFile=true`
+- Build for Windows: `dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true`
 
-Backend .env Configuration
+## Backend .env Configuration
 
 After building, create a .env file in the output directory:
 ```
@@ -68,7 +59,5 @@ R2_BUCKET_ID=bucket_id
 ```
 
 # Database Setup
-Create a PostgreSQL database:
-sutesfozes
-Run the schema located in:
-data.sql
+- Create a PostgreSQL database: `sutesfozes`
+- Run the schema located in: `data.sql`
